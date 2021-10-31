@@ -13,4 +13,5 @@ module.exports = {
     User: require('../models/user.model'),
     Teacher: require('../models/teacher.model'),
     Student: require('../models/student.model'),
+    Questions: require('../models/question.model')
 };
