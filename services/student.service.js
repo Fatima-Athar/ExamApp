@@ -7,6 +7,7 @@ const User = db.Student;
 module.exports = {
     authenticate,
     update,
+    getById,
 };
 
 async function authenticate({ username, password }) {
@@ -38,4 +39,8 @@ async function update(id, userParam) {
     Object.assign(user, userParam);
 
     await user.save();
+}
+
+async function getById(id) {
+    return await User.findById(id);
 }
