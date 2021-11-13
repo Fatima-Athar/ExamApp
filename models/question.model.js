@@ -18,5 +18,5 @@ const schema = new Schema({
     ]
 })
 
-const Questions = mongoose.model('Question', schema);
-module.exports = Questions;
+const Question = mongoose.model('Question', schema);
+module.exports = Question;

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Question = require('./models/Question') // includes our model
+const Question = require('../models/question.model') // includes our model
 
 // get all quiz questions
 router.get('/questions', async (req, res) => {
@@ -13,7 +13,7 @@ router.get('/questions', async (req, res) => {
 })
 
 // get one quiz question
-router.get('/questions/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const _id = req.params.id 
 
@@ -29,7 +29,7 @@ router.get('/questions/:id', async (req, res) => {
 })
 
 // create one quiz question
-router.post('/questions', async (req, res) => {
+router.post('/createQuestion', async (req, res) => {
     try {
         const { description } = req.body
         const { alternatives } = req.body
@@ -46,7 +46,7 @@ router.post('/questions', async (req, res) => {
 })
 
 // update one quiz question
-router.put('/questions/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const _id = req.params.id; 
         const { description, alternatives } = req.body
@@ -71,7 +71,7 @@ router.put('/questions/:id', async (req, res) => {
 })
 
 // delete one quiz question
-router.delete('/questions/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const _id = req.params.id 
 

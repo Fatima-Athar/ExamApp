@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const db = require('config/db');
 const User = db.Teacher;
 const Student = db.Student;
+
 module.exports = {
     authenticate,
     getAll,
