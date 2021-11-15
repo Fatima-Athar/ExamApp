@@ -13,8 +13,7 @@ app.use(cors());
 // use JWT auth to secure the api
 app.use(jwt());
 
-// api routes
-app.use('/question',require('./controllers/question.controller'));
+// api routescd
 app.use('/admin', require('./controllers/users.controller'));
 app.use('/teacher', require('./controllers/teacher.controller'));
 app.use('/student', require('./controllers/student.controller'));
@@ -24,7 +23,7 @@ app.use('/question',require('./controllers/question.controller'))
 app.use(errorHandler);
 
 // start server
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
-const server = app.listen(port, function () {
+const port = 4000;
+app.listen(port, function () {
     console.log('Server running on port ' + port);
 });

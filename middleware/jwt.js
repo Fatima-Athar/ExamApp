@@ -10,8 +10,9 @@ function jwt() {
             // public routes that don't require authentication
             '/admin/login',
             '/admin/register',
-            '/teachers/login',
-            '/students/login',
+            '/teacher/login',
+            '/student/login',
+            
         ]
     });
 }

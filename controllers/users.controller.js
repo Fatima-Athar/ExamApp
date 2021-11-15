@@ -4,7 +4,7 @@ const adminService = require('../services/user.service');
 // routes
 router.post('/login', login);
 router.post('/register', register);
-router.get('/', getAll);
+router.get('/admins', getAll);
 router.get('/teachers', getAllTeachers);
 router.get('/students', getAllStudents);
 router.get('/current', getCurrent);
