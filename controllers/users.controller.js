@@ -11,7 +11,8 @@ router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.put('/:id', update);
 router.delete('/:id', _delete);
-
+router.delete('/deleteTeacher/:id',deleteTeacher);
+router.delete('/deleteStudent/:id',deleteStudent);
 //routes for teacher related issues
 router.post('/registerTeacher', registerTeacher);
 router.post('/registerStudent', registerStudent);
@@ -79,6 +80,18 @@ function update(req, res, next) {
 
 function _delete(req, res, next) {
     adminService.delete(req.params.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function deleteTeacher(req, res, next) {
+    adminService.deleteTeacher(req.params.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function deleteStudent(req, res, next) {
+    adminService.deleteStudent(req.params.id)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

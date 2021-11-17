@@ -13,7 +13,6 @@ class AdminLogin extends Component {
         body:JSON.stringify(this.state) 
         }).then((result) => {
             result.json().then((resp) => {
-                console.log(resp.token);
                 localStorage.setItem('auth', ((resp.token))) 
                 console.log(localStorage.getItem('auth'))
             })

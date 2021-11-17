@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, {useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AddTeacher = () => {
+  let navigate = useNavigate();
   const [Teacher,setTeacher] = useState({
     firstName:"",
     lastName:"",
@@ -19,16 +20,14 @@ const onInputChange = e => {
 
 const onSubmit = async e => {
   e.preventDefault()
-  await axios({
-    method: 'post',
-    headers: {
+  await axios.post('http://localhost:4000/admin/registerTeacher',Teacher,
+        {headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('auth'),
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
         
-    },
-    url: "http://localhost:4000/admin/registerTeacher",Teacher
-})
+    }})
+  navigate('/AdminDashboard');
 
 }
     return(
@@ -70,7 +69,7 @@ const onSubmit = async e => {
           </div>
           <div className="form-group">
             <input
-              type="text"
+              type="password"
               className="form-control form-control-lg"
               placeholder="Enter Initial password"
               name="password"

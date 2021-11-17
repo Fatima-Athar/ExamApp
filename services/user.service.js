@@ -18,6 +18,8 @@ module.exports = {
     delete: _delete,
     createTeacher,
     createStudent,
+    deleteTeacher,
+    deleteStudent
 };
 
 async function authenticate({ username, password }) {
@@ -118,4 +120,11 @@ async function update(id, userParam) {
 
 async function _delete(id) {
     await User.findByIdAndRemove(id);
+}
+
+async function deleteTeacher(id) {
+    await Teacher.findByIdAndRemove(id);
+}
+async function deleteStudent(id) {
+    await Student.findByIdAndRemove(id);
 }

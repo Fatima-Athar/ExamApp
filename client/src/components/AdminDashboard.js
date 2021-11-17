@@ -1,52 +1,71 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
     const [teachers, setTeacher] = useState([]);
     const [students, setStudent] = useState([]);
-    
+
     useEffect(() => {
         loadTeachers();
         loadStudents();
-      }, []);
-    
-      const loadTeachers = async () => {
-        const result = 
-        await axios({
-            method: 'get',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('auth'),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                
-            },
-            url: "http://localhost:4000/admin/teachers"
-        })
+    }, []);
+
+    const loadTeachers = async () => {
+        const result =
+            await axios({
+                method: 'get',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('auth'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+
+                },
+                url: "http://localhost:4000/admin/teachers"
+            })
         console.log(result.data)
         setTeacher(result.data)
 
         //setUser(result.data.reverse());
-      };
-
-
-      const loadStudents = async () => {
-        const result = 
-        await axios({
-            method: 'get',
+    };
+    const deleteTeacher = async id => {
+        await axios.delete('http://localhost:4000/admin/deleteTeacher/' + id, {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('auth'),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                
-            },
-            url: "http://localhost:4000/admin/students"
-        })
+                'Authorization': 'Bearer ' + localStorage.getItem('auth')
+            }
+        }, {
+            data: { id: id }
+        });
+        loadTeachers();
+    };
+    const deleteStudent = async id => {
+        await axios.delete('http://localhost:4000/admin/deleteStudent/' + id, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('auth')
+            }
+        }, {
+            data: { id: id }
+        });
+        loadStudents();
+    };
+
+    const loadStudents = async () => {
+        const result =
+            await axios({
+                method: 'get',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('auth'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+
+                },
+                url: "http://localhost:4000/admin/students"
+            })
         console.log(result.data)
         setStudent(result.data)
 
         //setUser(result.data.reverse());
-      };
+    };
 
     /*try {
 
@@ -83,45 +102,47 @@ const AdminDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-            {teachers.map((teacher, index) => (
-              <tr>
-                <th scope="row">{index + 1}</th>
-                <td>{teacher.firstName}</td>
-                <td>{teacher.lastName}</td>
-                <td>{teacher.username}</td>
-                <td>
-                <Link className="btn btn-outline-secondary" to='/adminDashboard/addTeacher'>View</Link>
-                
-                <Link className="btn btn-outline-danger" to='/adminDashboard/addTeacher'>Delete</Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+                        {teachers.map((teacher, index) => (
+                            <tr>
+                                <th scope="row">{index + 1}</th>
+                                <td>{teacher.firstName}</td>
+                                <td>{teacher.lastName}</td>
+                                <td>{teacher.username}</td>
+                                <td>
+                                    <Link className="btn btn-outline-secondary me-2" to='/adminDashboard/addTeacher'>View</Link>
+                                    <button className="btn btn-outline-danger" onClick={() => deleteTeacher(teacher.id)} >Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
                 <div className='py-4'>
-                <h1> Students</h1>
-                <table class="table border shadow">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">username</th>
-                            <th> Action </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            {students.map((student, index) => (
-              <tr>
-                <th scope="row">{index + 1}</th>
-                <td>{student.firstName}</td>
-                <td>{student.lastName}</td>
-                <td>{student.username}</td>
-                
-              </tr>
-            ))}
-          </tbody>
-                </table>
+                    <h1> Students</h1>
+                    <table class="table border shadow">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">username</th>
+                                <th> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {students.map((student, index) => (
+                                <tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{student.firstName}</td>
+                                    <td>{student.lastName}</td>
+                                    <td>{student.username}</td>
+                                    <td>
+                                        <button className="btn btn-outline-danger" onClick={() => deleteStudent(student.id)} >Delete</button>
+                                    </td>
+
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
