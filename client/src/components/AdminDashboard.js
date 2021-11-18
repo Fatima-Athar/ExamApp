@@ -13,7 +13,8 @@ const AdminDashboard = () => {
         loadTeachers();
         loadStudents();
     }, []);
-
+    
+    
     const viewTeacher = async id => {
         nav('/adminDashboard/viewTeacher/'+id)
 
@@ -100,7 +101,7 @@ const AdminDashboard = () => {
     }*/
     return (
         
-        <div className="container">
+        <div className="container"> <br></br>
             <div className='py-4'>
                 <h1> Teachers</h1>
                 <table class="table table-hover border shadow">

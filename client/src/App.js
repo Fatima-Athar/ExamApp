@@ -7,7 +7,7 @@ import Navbar from './components/layout/Navbar';
 import TeacherLogin from './components/TeacherLogin';
 import StudentLogin from './components/StudentLogin';
 import Protected from './components/Protected';
-import TeacherProtected from './components/TeacherProtected';
+
 import { BrowserRouter, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import AdminDashboard from './components/AdminDashboard';
@@ -17,6 +17,7 @@ import AddTeacher from './components/AddTeacher';
 import AddStudent from './components/AddStudent';
 import ViewTeacher from './components/ViewTeacher';
 import ViewStudent from './components/ViewStudent';
+import QuizTab from './components/QuizTab';
 function App() {
   return (  
         <Router>
@@ -37,6 +38,7 @@ function App() {
             <Route exact path ='/adminDashboard/addStudent' element={<AddStudent/>} />
             <Route exact path ='/adminDashboard/viewTeacher/:id' element={<ViewTeacher/>} />
             <Route exact path ='/adminDashboard/viewStudent/:id' element={<ViewStudent/>} />
+            <Route exact path ='/TeacherDashboard/QuizTab' element={<QuizTab/>} />
             <Route path='*' element= {<NotFound/>} />
           </Routes>
         </div>

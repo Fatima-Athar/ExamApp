@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const TeacherDashboard = () => {
     const [students, setStudent] = useState([]);
@@ -28,6 +29,8 @@ const TeacherDashboard = () => {
 
     return (
         <div className="container">
+          <br></br>
+          <Link className="btn btn-outline-secondary me-2" to='/TeacherDashboard/QuizTab'  >Quiz Tab</Link>
             <div className='py-4'>
                 <h1> Students</h1>
                 <table class="table border shadow">
