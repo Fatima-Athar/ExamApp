@@ -7,6 +7,7 @@ import Navbar from './components/layout/Navbar';
 import TeacherLogin from './components/TeacherLogin';
 import StudentLogin from './components/StudentLogin';
 import Protected from './components/Protected';
+import TeacherProtected from './components/TeacherProtected';
 import { BrowserRouter, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import AdminDashboard from './components/AdminDashboard';
@@ -14,6 +15,8 @@ import TeacherDashboard from './components/TeacherDashboard';
 import StudentDashboard from './components/StudentDashboard';
 import AddTeacher from './components/AddTeacher';
 import AddStudent from './components/AddStudent';
+import ViewTeacher from './components/ViewTeacher';
+import ViewStudent from './components/ViewStudent';
 function App() {
   return (  
         <Router>
@@ -23,14 +26,17 @@ function App() {
           
           <Routes>
             <Route exact path = '/about'  element={<About/>} />
-            <Route exact path = '/' element={<AdminLogin/>} />
+            <Route exact path = '/' element={<AdminLogin/>} />  
             <Route exact path = '/teacherLogin' element={<TeacherLogin/>} />
             <Route exact path = '/studentLogin' element={<StudentLogin/>} />
-            <Route exact path = '/adminDashboard'  element={<AdminDashboard/>} />
-            <Route exact path = '/TeacherDashboard'  element={<TeacherDashboard/>} />
-            <Route path="/studentDashboard"  element={<Protected cmp={StudentDashboard}></Protected>} />
+              
+            <Route exact path="/adminDashboard"  element={<AdminDashboard/> }/>
+            <Route exact path="/TeacherDashboard"  element={<TeacherDashboard/> }/>
+            <Route exact path="/studentDashboard"  element={<StudentDashboard/> }/>
             <Route exact path ='/adminDashboard/addTeacher' element={<AddTeacher/>} />
             <Route exact path ='/adminDashboard/addStudent' element={<AddStudent/>} />
+            <Route exact path ='/adminDashboard/viewTeacher/:id' element={<ViewTeacher/>} />
+            <Route exact path ='/adminDashboard/viewStudent/:id' element={<ViewStudent/>} />
             <Route path='*' element= {<NotFound/>} />
           </Routes>
         </div>

@@ -19,7 +19,7 @@ module.exports = {
     createTeacher,
     createStudent,
     deleteTeacher,
-    deleteStudent
+    deleteStudent,
 };
 
 async function authenticate({ username, password }) {
@@ -41,6 +41,9 @@ async function getAllTeachers() {
 }
 async function getAllStudents() {
     return await Student.find();
+}
+async function getById(id) {
+    return await User.findById(id);
 }
 async function getById(id) {
     return await User.findById(id);

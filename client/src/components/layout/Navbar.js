@@ -41,8 +41,8 @@ const Navbar = () => {
                 </div>
             </div>
             
-            <Link className='btn btn-outline-light me-2' to='/adminDashboard/addTeacher'>Add Teacher</Link>
-            <Link className='btn btn-outline-light me-2 ' to='/adminDashboard/addStudent'>Add Student</Link>
+            <Link className='btn btn-outline-light me-2 col-1.5' to='/adminDashboard/addTeacher'>Add Teacher</Link>
+            <Link className='btn btn-outline-light me-2 col-1.5' to='/adminDashboard/addStudent'>Add Student</Link>
         </div>
         </nav>
     );

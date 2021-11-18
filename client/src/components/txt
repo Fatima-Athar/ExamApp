@@ -101,3 +101,58 @@ export default AdminDashboard;
             <div className="container-fluid">
 
 <NavLink className="navbar-brand" exact to="/">Zap</NavLink>
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+
+const ViewTeacher = () => {
+  const [Teacher, setTeacher] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+    subject: "",
+  });
+
+  const { id } = useParams();
+  useEffect(() => {
+    loadTeachers();
+  }, []);
+
+  const loadTeachers = async id => {
+      console.log(id)
+    const result = await axios.get('http://localhost:4000/admin/' + id, {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('auth')
+        }
+    });
+    setTeacher(result.data);
+    
+  };
+  return (
+    <div className="container py-4">
+      <Link className="btn btn-primary" to="/">
+        back to Home
+      </Link>
+      <h1 className="display-4">Teacher Id: {id}</h1>
+      <hr />
+      <ul className="list-group w-50">
+        <li className="list-group-item">First Name: {Teacher.firstName}</li>
+        <li className="list-group-item">Last Name: {Teacher.lastName}</li>
+        <li className="list-group-item">Username: {Teacher.username}</li>
+        <li className="list-group-item">Subject: {Teacher.subject}</li>
+        
+      </ul>
+    </div>
+  );
+};
+
+export default ViewTeacher;

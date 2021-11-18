@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
+    
+    const nav = useNavigate();
     const [teachers, setTeacher] = useState([]);
     const [students, setStudent] = useState([]);
 
@@ -11,6 +14,14 @@ const AdminDashboard = () => {
         loadStudents();
     }, []);
 
+    const viewTeacher = async id => {
+        nav('/adminDashboard/viewTeacher/'+id)
+
+    };
+    const viewStudent = async id => {
+        nav('/adminDashboard/viewStudent/'+id)
+
+    };
     const loadTeachers = async () => {
         const result =
             await axios({
@@ -21,7 +32,7 @@ const AdminDashboard = () => {
                     'Content-Type': 'application/json',
 
                 },
-                url: "http://localhost:4000/admin/teachers"
+                url: "http://localhost:4000/admin/teachers/"
             })
         console.log(result.data)
         setTeacher(result.data)
@@ -88,10 +99,11 @@ const AdminDashboard = () => {
         console.log(e)
     }*/
     return (
+        
         <div className="container">
             <div className='py-4'>
                 <h1> Teachers</h1>
-                <table class="table border shadow">
+                <table class="table table-hover border shadow">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -109,7 +121,7 @@ const AdminDashboard = () => {
                                 <td>{teacher.lastName}</td>
                                 <td>{teacher.username}</td>
                                 <td>
-                                    <Link className="btn btn-outline-secondary me-2" to='/adminDashboard/addTeacher'>View</Link>
+                                    <button className="btn btn-outline-secondary me-2" onClick={() => viewTeacher(teacher.id)} >View</button>
                                     <button className="btn btn-outline-danger" onClick={() => deleteTeacher(teacher.id)} >Delete</button>
                                 </td>
                             </tr>
@@ -118,7 +130,7 @@ const AdminDashboard = () => {
                 </table>
                 <div className='py-4'>
                     <h1> Students</h1>
-                    <table class="table border shadow">
+                    <table class="table table-hover border shadow">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -136,6 +148,7 @@ const AdminDashboard = () => {
                                     <td>{student.lastName}</td>
                                     <td>{student.username}</td>
                                     <td>
+                                        <button className="btn btn-outline-secondary me-2" onClick={() => viewStudent(student.id)} >View</button>
                                         <button className="btn btn-outline-danger" onClick={() => deleteStudent(student.id)} >Delete</button>
                                     </td>
 
@@ -146,6 +159,7 @@ const AdminDashboard = () => {
                 </div>
             </div>
         </div>
+        
     );
 };
 

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import { createContext } from "react";
 
 
-class AdminLogin extends Component {
-    login() {
+function AdminLogin() {    
+    const login = () => {
         console.warn('state',this.state);
         fetch('http://localhost:4000/admin/login',{
         method:'post',
@@ -13,13 +14,15 @@ class AdminLogin extends Component {
         body:JSON.stringify(this.state) 
         }).then((result) => {
             result.json().then((resp) => {
+                
                 localStorage.setItem('auth', ((resp.token))) 
                 console.log(localStorage.getItem('auth'))
+                
             })
         })
-        alert("Login Code Worked!")
+        
     }
-    render() {
+    
         return(
             <div>
                 <div>
@@ -32,13 +35,13 @@ class AdminLogin extends Component {
                      onChange={(e)=>{this.setState({password:e.target.value})}}
                      /> 
                      <br /><br />
-                    <button onClick={()=>this.login()}>Login</button>
+                    <button onClick={login}>Login</button>
                     
                     </div></div> 
                 </div>
             </div>
         );
     }
-}
+
 
 export default AdminLogin;

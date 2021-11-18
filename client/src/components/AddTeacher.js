@@ -9,10 +9,10 @@ const AddTeacher = () => {
     lastName:"",
     username:"",
     password:"",
-    subject:""
+    Subject:""
   })
 
-const {firstName,lastName,username,password,subject} = Teacher; 
+const {firstName,lastName,username,password,Subject} = Teacher; 
 const onInputChange = e => {
   setTeacher({...Teacher,[e.target.name]: e.target.value})
 
@@ -82,8 +82,8 @@ const onSubmit = async e => {
               type="text"
               className="form-control form-control-lg"
               placeholder="Enter Subject"
-              name="subject"
-              value={subject}
+              name="Subject"
+              value={Subject}
               onChange ={e => onInputChange(e)} 
             />
           </div>
