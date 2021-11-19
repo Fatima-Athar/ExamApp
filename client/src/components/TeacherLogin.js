@@ -25,7 +25,12 @@ function TeacherLogin() {
                 alert("Login Successful!")
                 history("/TeacherDashboard");
             }
-        });
+        }).catch(error => {
+            if (error.response) {
+              console.log(error.response);
+              alert(error.response.data.message)
+            }
+          });;
     };
     return (
         <div>

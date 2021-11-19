@@ -12,10 +12,10 @@ function Login() {
     let history = useNavigate();
 
     const login = () => {
-
+        /*
         const data = { username: username, password: password };
         axios.post("http://localhost:4000/admin/login", data).then((response) => {
-            if (response.data.error) {
+            if (response.data.error ) {
 
                 alert('Login Failed!')
             } else {
@@ -25,7 +25,25 @@ function Login() {
                 alert("Login Successful!")
                 history("/adminDashboard");
             }
-        });
+        }); */
+        const data = { username: username, password: password };
+        axios.post("http://localhost:4000/admin/login", data).then((response) => {
+            if (response.data.error ) {
+
+                alert('Login Failed!')
+            } else {
+                localStorage.setItem('auth', (response.data.token));
+                console.log(localStorage.getItem('auth'))
+                setAuthState(true);
+                alert("Login Successful!")
+                history("/adminDashboard");
+            }
+        }).catch(error => {
+            if (error.response) {
+              console.log(error.response);
+              alert(error.response.data.message)
+            }
+          });
     };
     return (
         <div>

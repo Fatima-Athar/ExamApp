@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 const QuizDashboard = () => {
+     let nav = useNavigate();
      const [questions, setQuestions] = useState([]);
 
      useEffect( () => {
@@ -20,6 +21,10 @@ const QuizDashboard = () => {
            data: { id: id }
        });
        loadQuestions();
+    }
+
+    const viewQuestion = async id => {
+        nav('/TeacherDashboard/QuizTab/viewQuestion/'+id)
     }
     
      const loadQuestions = async () => {
@@ -42,7 +47,7 @@ const QuizDashboard = () => {
         <div className="container">
             <div>
             <br/>
-            <Link className='btn btn-outline-dark me-3' to='/quizDashboard/addQuestion'>Add Question</Link>
+            <Link className='btn btn-outline-dark me-3' to='/TeacherDashboard/QuizTab/addQuestion'>Add Question</Link>
             </div>
             <div className="py-4">
                 <h1>Quiz Questions</h1>
@@ -61,8 +66,9 @@ const QuizDashboard = () => {
                 <th scope="row">{index+1}</th>
                 <td>{question.description}</td> 
                 <td>
+                <button className="btn btn-outline-primary me-2" onClick={() => viewQuestion(question._id)} >View</button>
                 <button className="btn btn-outline-danger me-2" onClick={() => deleteQuestion(question._id)} >Delete</button>
-                
+
           </td>
           </tr> 
           ))
