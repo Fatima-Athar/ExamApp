@@ -26,12 +26,7 @@ const Navbar = () => {
                         <li className="nav-item">
                             <NavLink className="nav-link" aria-current="page" exact to="/studentLogin">Student Login</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" aria-current="page" exact to="/adminDashboard">Admin Dashboard</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" aria-current="page" exact to="/teacherDashboard">Teacher Dashboard</NavLink>
-                        </li>
+                        
                         <li className="nav-item">
                             <NavLink className="nav-link" exact to="/about">About</NavLink>
                         </li>
@@ -40,9 +35,6 @@ const Navbar = () => {
 
                 </div>
             </div>
-            
-            <Link className='btn btn-outline-light me-2 col-1.5' to='/adminDashboard/addTeacher'>Add Teacher</Link>
-            <Link className='btn btn-outline-light me-2 col-1.5' to='/adminDashboard/addStudent'>Add Student</Link>
         </div>
         </nav>
     );

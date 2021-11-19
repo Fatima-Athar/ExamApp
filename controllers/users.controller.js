@@ -16,6 +16,10 @@ router.delete('/deleteStudent/:id',deleteStudent);
 //routes for teacher related issues
 router.post('/registerTeacher', registerTeacher);
 router.post('/registerStudent', registerStudent);
+router.get('/teachers/:id',getTeacherById);
+router.get('/students/:id',getStudentById);
+router.put('/teachers/:id',updateTeacher);
+router.put('/students/:id',updateStudent);
 
 module.exports = router;
 
@@ -72,12 +76,33 @@ function getById(req, res, next) {
         .catch(err => next(err));
 }
 
+function getTeacherById(req,res,next) {
+    adminService.getTeacherById(req.params.id)
+    .then(user => user ? res.json(user) : res.sendStatus(404))
+    .catch(err => next(err));
+}
+
+function getStudentById(req,res,next) {
+    adminService.getStudentById(req.params.id)
+    .then(user => user ? res.json(user) : res.sendStatus(404))
+    .catch(err => next(err));
+}
 function update(req, res, next) {
     adminService.update(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
+function updateTeacher(req, res, next) {
+    adminService.updateTeacher(req.params.id, req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
 
+function updateStudent(req, res, next) {
+    adminService.updateStudent(req.params.id, req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
 function _delete(req, res, next) {
     adminService.delete(req.params.id)
         .then(() => res.json({}))

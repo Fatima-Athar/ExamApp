@@ -1,44 +1,50 @@
-import React, {Component} from 'react';
 
+import React, { useState, useContext } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./_helpers/AuthContext";
 
-class TeacherLogin extends Component {
-    login() {
-        console.warn('state',this.state);
-        fetch('http://localhost:4000/teacher/login',{
-        method:'post',
-        headers: {
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-        },
-        body:JSON.stringify(this.state) 
-        }).then((result) => {
-            result.json().then((resp) => {
-                console.log(resp.token);
-                localStorage.setItem('auth', JSON.stringify(resp.token)) 
-            })
-        })
-        //alert("Login Code Worked!")
-    }
-    render() {
-        return(
-            <div>
+function TeacherLogin() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const { setAuthState } = useContext(AuthContext);
+
+    let history = useNavigate();
+
+    const login = () => {
+
+        const data = { username: username, password: password };
+        axios.post("http://localhost:4000/teacher/login", data).then((response) => {
+            if (response.data.error) {
+
+                alert('Login Failed!')
+            } else {
+                localStorage.setItem('auth', (response.data.token));
+                console.log(localStorage.getItem('auth'))
+                setAuthState(true);
+                alert("Login Successful!")
+                history("/TeacherDashboard");
+            }
+        });
+    };
+    return (
+        <div>
                 <div>
                 <div className="container"> <div className="py-4">
                     <input type="text" placeholder="Username"
-                    onChange={(e)=>{this.setState({username:e.target.value})}}
+                    onChange={(event)=>{setUsername(event.target.value);}}
                     />
                     <br /><br />
                     <input type="password" placeholder="Password" 
-                     onChange={(e)=>{this.setState({password:e.target.value})}}
+                     onChange={(event)=>{setPassword(event.target.value)}}
                      /> 
                      <br /><br />
-                    <button onClick={()=>this.login()}>Login</button>
+                    <button onClick={login}>Login</button>
                     
                     </div></div> 
                 </div>
             </div>
-        );
-    }
+            );
 }
 
-export default TeacherLogin;
+            export default TeacherLogin;

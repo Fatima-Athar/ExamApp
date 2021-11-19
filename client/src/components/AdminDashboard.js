@@ -23,6 +23,15 @@ const AdminDashboard = () => {
         nav('/adminDashboard/viewStudent/'+id)
 
     };
+
+    const editTeacher = async id => {
+        nav('/adminDashboard/editTeacher/'+id)
+    };
+
+    const editStudent = async id => {
+        nav('/adminDashboard/editStudent/'+id)
+    };
+
     const loadTeachers = async () => {
         const result =
             await axios({
@@ -102,6 +111,9 @@ const AdminDashboard = () => {
     return (
         
         <div className="container"> <br></br>
+        
+        <Link className='btn btn-outline-secondary me-2' to='/adminDashboard/addTeacher'>Add Teacher</Link>
+            <Link className='btn btn-outline-secondary me-2' to='/adminDashboard/addStudent'>Add Student</Link>
             <div className='py-4'>
                 <h1> Teachers</h1>
                 <table class="table table-hover border shadow">
@@ -123,7 +135,9 @@ const AdminDashboard = () => {
                                 <td>{teacher.username}</td>
                                 <td>
                                     <button className="btn btn-outline-secondary me-2" onClick={() => viewTeacher(teacher.id)} >View</button>
-                                    <button className="btn btn-outline-danger" onClick={() => deleteTeacher(teacher.id)} >Delete</button>
+                                    <button className="btn btn-outline-primary" onClick={()=> editTeacher(teacher.id)} >Edit </button>
+                                    <button className="btn btn-outline-danger me-2" onClick={() => deleteTeacher(teacher.id)} >Delete</button>
+                                    
                                 </td>
                             </tr>
                         ))}
@@ -150,7 +164,9 @@ const AdminDashboard = () => {
                                     <td>{student.username}</td>
                                     <td>
                                         <button className="btn btn-outline-secondary me-2" onClick={() => viewStudent(student.id)} >View</button>
+                                        <button className="btn btn-outline-primary" onClick={()=> editStudent(student.id)} >Edit </button>
                                         <button className="btn btn-outline-danger" onClick={() => deleteStudent(student.id)} >Delete</button>
+                                        
                                     </td>
 
                                 </tr>
