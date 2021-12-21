@@ -2,48 +2,39 @@ const config = require('../config/config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('config/db');
-const User = db.Teacher;
-const Student = db.Student;
+const User = db.User;
+const Teacher = db.Teacher;
 
 module.exports = {
-    authenticate,
-    getAll,
-    getAllStudents,
-    getById,
+    
     update,
+    addInfo,
+    
 };
 
-async function authenticate({ username, password }) {
-    const user = await User.findOne({ username });
-    if (user && bcrypt.compareSync(password, user.hash)) {
-        const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
+/*async function login({ user_id, password }) {
+    const user = await User.findOne({ user_id });
+    if (user && bcrypt.compareSync(password, user.hash) && user.role =='teacher') {
+        const accessToken = jwt.sign({ user_id: user.user_id, role:user.role }, config.secret, { expiresIn: '7d' });
+        await User.findByIdAndUpdate(user._id, { accessToken })
         return {
             ...user.toJSON(),
-            token
+            accessToken
         };
     }
-}
+}*/
 
-async function getAll() {
-    return await User.find();
-}
-async function getAllStudents() {
-    return await Student.find();
-}
-
-async function getById(id) {
-    return await User.findById(id);
-}
-
-async function update(id, userParam) {
-    const user = await User.findById(id);
-
+async function update(user_id,userParam) {
+    const user = await User.findOne({user_id:user_id});
     // validate
-    if (!user) throw 'User not found';
-    if (user.username !== userParam.username && await User.findOne({ username: userParam.username })) {
-        throw 'Username "' + userParam.username + '" is already taken';
+    if(user.role !== 'teacher') {
+        throw 'You are not authorized to make this change'
     }
-
+    if (!user) throw 'User not found';
+    if (user.user_id !== userParam.user_id && await User.findOne({ user_id: userParam.user_id })) {
+        throw 'User ID "' + userParam.user_id + '" is already taken';
+    }
+    
     // hash password if it was entered
     if (userParam.password) {
         userParam.hash = bcrypt.hashSync(userParam.password, 10);
@@ -53,4 +44,28 @@ async function update(id, userParam) {
     Object.assign(user, userParam);
 
     await user.save();
+}
+
+async function addInfo(user_id,userParam) {
+    const user = await User.findOne( { user_id:user_id})
+    if(!user) {
+        throw 'User not found'
+    }
+    if(user.role!=='teacher') {
+        throw 'You are not Authorized to make this change';
+    }
+    const teacher = await Teacher.findOne({teacher_id:user._id}) 
+    if(!teacher) {
+     teacher = new Teacher(userParam);
+     teacher.teacher_id = user._id;
+    }
+    
+    Object.assign(teacher, userParam);
+    await teacher.save()
+}
+
+async function getById(id) {
+    
+    return await User.findById(id);
+
 }

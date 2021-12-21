@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import {Link, useNavigate, useParams } from "react-router-dom";
 
 const EditTeacher = () => {
   let history = useNavigate();
@@ -8,11 +8,11 @@ const EditTeacher = () => {
   const [teacher, setTeacher] = useState({
     firstName: "",
     lastname:"",
-    username: "",
-    Subject: ""
+    user_id: "",
+    
   });
 
-  const { firstName, lastName, username, Subject } = teacher;
+  const { firstName, lastName, user_id} = teacher;
   const onInputChange = e => {
     setTeacher({ ...teacher, [e.target.name]: e.target.value });
   };
@@ -23,13 +23,37 @@ const EditTeacher = () => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    await axios.put('http://localhost:4000/admin/teachers/'+id, teacher);
+    //await axios.put('http://localhost:4000/admin/'+id, student);
+    console.log(id)
+    await axios({
+      method: 'put',
+      data: teacher,
+      headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('auth'),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+
+      },
+      url: 'http://localhost:4000/admin/' + id
+  })        
+            
     history("/adminDashboard");
   };
 
   const loadTeacher = async () => {
-    const result = await axios.get('http://localhost:4000/admin/teachers/'+id);
-    setTeacher(result.data);
+    const result =
+            await axios({
+                method: 'get',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('auth'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+
+                },
+                url: 'http://localhost:4000/admin/getById/' + id
+            })        
+        console.log(result.data)
+        setTeacher(result.data)
   };
   return (
     <div className="container">
@@ -62,26 +86,19 @@ const EditTeacher = () => {
             <input
               type="text"
               className="form-control form-control-lg"
-              placeholder="Enter Username"
-              name="username"
-              value={username}
+              placeholder="Enter User ID"
+              name="user_id"
+              value={user_id}
               onChange={e => onInputChange(e)}
             />
             <br></br>
           </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Subjecgt"
-              name="Subject"
-              value={Subject}
-              onChange={e => onInputChange(e)}
-            />
-            <br></br>
-          </div>
+
           
-          <button className="btn btn-primary">Update Teacher</button>
+          <button className="btn btn-primary me-2 mb-2">Update Teacher</button>
+          <Link className="btn btn-primary me-2 mb-2" to="/adminDashboard">
+                Back to Dashboard
+            </Link>
         </form>
       </div>
     </div>

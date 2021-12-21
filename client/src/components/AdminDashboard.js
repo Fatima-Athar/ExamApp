@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
-    
     const nav = useNavigate();
     const [teachers, setTeacher] = useState([]);
     const [students, setStudent] = useState([]);
@@ -42,15 +41,15 @@ const AdminDashboard = () => {
                     'Content-Type': 'application/json',
 
                 },
-                url: "http://localhost:4000/admin/teachers/"
+                url: "http://localhost:4000/admin/getTeachers/"
             })
-        console.log(result.data)
-        setTeacher(result.data)
+        console.log(result.data.data.users)
+        setTeacher(result.data.data.users)
 
         //setUser(result.data.reverse());
     };
     const deleteTeacher = async id => {
-        await axios.delete('http://localhost:4000/admin/deleteTeacher/' + id, {
+        await axios.delete('http://localhost:4000/admin/' + id, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('auth')
             }
@@ -60,7 +59,7 @@ const AdminDashboard = () => {
         loadTeachers();
     };
     const deleteStudent = async id => {
-        await axios.delete('http://localhost:4000/admin/deleteStudent/' + id, {
+        await axios.delete('http://localhost:4000/admin/' + id, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('auth')
             }
@@ -80,10 +79,10 @@ const AdminDashboard = () => {
                     'Content-Type': 'application/json',
 
                 },
-                url: "http://localhost:4000/admin/students"
+                url: "http://localhost:4000/admin/getStudents"
             })
-        console.log(result.data)
-        setStudent(result.data)
+        console.log(result.data.data.users)
+        setStudent(result.data.data.users)
 
         //setUser(result.data.reverse());
     };
@@ -112,8 +111,8 @@ const AdminDashboard = () => {
         
         <div className="container"> <br></br>
         
-        <Link className='btn btn-outline-secondary me-2' to='/adminDashboard/addTeacher'>Add Teacher</Link>
-            <Link className='btn btn-outline-secondary me-2' to='/adminDashboard/addStudent'>Add Student</Link>
+        <Link className="btn btn-primary btn-block me-2" to='/adminDashboard/addTeacher'>Add Teacher</Link>
+            <Link className="btn btn-primary btn-block me-2" to='/adminDashboard/addStudent'>Add Student</Link>
             <div className='py-4'>
                 <h1> Teachers</h1>
                 <table class="table table-hover border shadow">
@@ -122,7 +121,7 @@ const AdminDashboard = () => {
                             <th scope="col">#</th>
                             <th scope="col">First Name</th>
                             <th scope="col">Last Name</th>
-                            <th scope="col">username</th>
+                            <th scope="col">User ID</th>
                             <th> Action </th>
                         </tr>
                     </thead>
@@ -132,13 +131,13 @@ const AdminDashboard = () => {
                                 <th scope="row">{index + 1}</th>
                                 <td>{teacher.firstName}</td>
                                 <td>{teacher.lastName}</td>
-                                <td>{teacher.username}</td>
+                                <td>{teacher.user_id}</td>
                                 <td>
                                     <button className="btn btn-outline-secondary me-2" onClick={() => viewTeacher(teacher.id)} >View</button>
-                                    <button className="btn btn-outline-primary" onClick={()=> editTeacher(teacher.id)} >Edit </button>
-                                    <button className="btn btn-outline-danger me-2" onClick={() => deleteTeacher(teacher.id)} >Delete</button>
+                                    <button className="btn btn-outline-primary me-2" onClick={()=> editTeacher(teacher.id)} >Edit </button>
+                                    <button className="btn btn-outline-danger me-2" onClick={() => deleteTeacher(teacher.user_id)} >Delete</button>
                                     
-                                </td>
+                                </td>   
                             </tr>
                         ))}
                     </tbody>
@@ -151,7 +150,7 @@ const AdminDashboard = () => {
                                 <th scope="col">#</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
-                                <th scope="col">username</th>
+                                <th scope="col">user ID</th>
                                 <th> Action </th>
                             </tr>
                         </thead>
@@ -161,11 +160,11 @@ const AdminDashboard = () => {
                                     <th scope="row">{index + 1}</th>
                                     <td>{student.firstName}</td>
                                     <td>{student.lastName}</td>
-                                    <td>{student.username}</td>
+                                    <td>{student.user_id}</td>
                                     <td>
                                         <button className="btn btn-outline-secondary me-2" onClick={() => viewStudent(student.id)} >View</button>
-                                        <button className="btn btn-outline-primary" onClick={()=> editStudent(student.id)} >Edit </button>
-                                        <button className="btn btn-outline-danger" onClick={() => deleteStudent(student.id)} >Delete</button>
+                                        <button className="btn btn-outline-primary me-2" onClick={()=> editStudent(student.id)} >Edit </button>
+                                        <button className="btn btn-outline-danger" onClick={() => deleteStudent(student.user_id)} >Delete</button>
                                         
                                     </td>
 

@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    username: { type: String, unique: true, required: true },
+    user_id: { type: String, unique: true, required: true },
     hash: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    createdDate: { type: Date, default: Date.now }
+    role: {type: String, required: true, enum:['admin','teacher','student']},
+    createdDate: { type: Date, default: Date.now },
+    accessToken: {type: String}
 });
 
 schema.set('toJSON', {

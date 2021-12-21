@@ -34,7 +34,7 @@ const TeacherDashboard = () => {
     return (
         <div className="container">
           <br></br>
-          <Link className="btn btn-outline-secondary me-2" to='/TeacherDashboard/QuizTab'  >Quiz Tab</Link>
+          <Link className="btn btn-outline-secondary me-2" to='/teacherDashboard/QuizTab'  >Quiz Tab</Link>
             <div className='py-4'>
                 <h1> Students</h1>
                 <table class="table border shadow">

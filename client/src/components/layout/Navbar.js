@@ -1,7 +1,15 @@
 import React from "react";
 import {Link, NavLink} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import image from '../logo.jpg';
 const Navbar = () => {
+    const history = useNavigate()
+    const user = JSON.parse(localStorage.getItem('user'))
+    const token = localStorage.getItem('user');
+    const logout = () => {
+        history("/")
+        localStorage.clear()
+    }
     return (
         <nav className="navbar navbar-expand navbar-dark bg-dark">
             <div className="container" >
@@ -16,20 +24,26 @@ const Navbar = () => {
                     
                 </button>
                 <div className="collapse navbar-collapse" >
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <NavLink className="nav-link" aria-current="page" exact to="/">Admin Login</NavLink>
+                            {!token &&
+                            <NavLink className="nav-link" aria-current="page" exact to="/"> Login</NavLink>
+                            }
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" aria-current="page" exact to="/teacherLogin">Teacher Login</NavLink>
+                            <NavLink className="nav-link" exact to="/profilePage"> Profile Page</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" aria-current="page" exact to="/studentLogin">Student Login</NavLink>
-                        </li>
-                        
                         <li className="nav-item">
                             <NavLink className="nav-link" exact to="/about">About</NavLink>
                         </li>
+                        
+                        <li className="nav-item">
+                            {token &&
+                            <button  className="btn btn-primary btn-block" onClick={logout}>Logout</button>
+                    }
+                        </li>
+
+
                         
                     </ul>
 

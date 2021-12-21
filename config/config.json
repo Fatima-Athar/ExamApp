@@ -1,4 +1,5 @@
 {
     "connectionString": "mongodb://localhost/exam-app-database",
-    "secret": "SicMundusCreatusEst"
+    "secret": "SicMundusCreatusEst",
+    "role": "admin"
 }

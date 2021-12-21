@@ -2,10 +2,8 @@ import React from 'react';
 import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import About from './components/About';
-import AdminLogin from './components/AdminLogin'; 
+import Login from './components/Login'; 
 import Navbar from './components/layout/Navbar';
-import TeacherLogin from './components/TeacherLogin';
-import StudentLogin from './components/StudentLogin';
 import Protected from './components/Protected';
 import TeacherProtected from './components/TeacherProtected';
 import { BrowserRouter, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -23,6 +21,7 @@ import QuizTab from './components/QuizTab';
 import ViewQuestion from './components/ViewQuestion';
 import {AuthContext} from './components/_helpers/AuthContext';
 import AddQuestion from './components/AddQuestion';
+import Profile from './components/Profile';
 import {useState} from 'react';
 
 function App() {
@@ -35,11 +34,8 @@ function App() {
           <AuthContext.Provider value={{authState,setAuthState}}>
           <Routes>
             <Route exact path = '/about'  element={<About/>} />
-            {!authState && ( <>
-            <Route exact path = '/' element={<AdminLogin/>} />  
-            <Route exact path = '/teacherLogin' element={<TeacherLogin/>} />
-            <Route exact path = '/studentLogin' element={<StudentLogin/>} />
-            </> )}
+           
+            <Route exact path = '/' element={<Login/>} />  
             <Route path = '/adminDashboard' element= {<Protected cmp={AdminDashboard}></Protected>}/>
             <Route path = '/teacherDashboard'  element={<TeacherProtected cmp={TeacherDashboard}></TeacherProtected>}/>
             <Route exact path="/studentDashboard"  element={<StudentDashboard/> }/>
@@ -52,6 +48,7 @@ function App() {
             <Route exact path ='/teacherDashboard/QuizTab' element={<QuizTab/>} />
             <Route exact path = '/teacherDashboard/QuizTab/addQuestion/' element = {<AddQuestion/>} />
             <Route exact path = '/teacherDashboard/QuizTab/viewQuestion/:id' element = {<ViewQuestion/>} />
+            <Route exact path ='/profilePage' element = {<Protected cmp={Profile}></Protected>}/>
            
             <Route path='*' element= {<NotFound/>} />
           </Routes>

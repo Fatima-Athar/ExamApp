@@ -1,22 +1,24 @@
 const expressJwt = require('express-jwt');
 const config = require('../config/config.json');
 const userService = require('../services/user.service');
+module.exports = jwt ;
 
-module.exports = jwt;
 
 function jwt() {
     const secret = config.secret;
+     
     return expressJwt({ secret, algorithms: ['HS256'], isRevoked }).unless({
         path: [
             // public routes that don't require authentication
             '/admin/login',
             '/teacher/login',
             '/student/login',
-            
-            
-        ]
+            '/admin/register'
+        ],
+        
     });
 }
+
 
 async function isRevoked(req, payload, done) {
     const user = await userService.getById(payload.sub);

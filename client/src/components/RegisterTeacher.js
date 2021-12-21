@@ -8,7 +8,7 @@ function RegisterPage() {
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
-        username: '',
+        user_id: '',
         password: ''
     });
     const [submitted, setSubmitted] = useState(false);
@@ -53,10 +53,10 @@ function RegisterPage() {
                     }
                 </div>
                 <div className="form-group">
-                    <label>Username</label>
-                    <input type="text" name="username" value={user.username} onChange={handleChange} className={'form-control' + (submitted && !user.username ? ' is-invalid' : '')} />
-                    {submitted && !user.username &&
-                        <div className="invalid-feedback">Username is required</div>
+                    <label>User ID</label>
+                    <input type="text" name="user_id" value={user.user_id} onChange={handleChange} className={'form-control' + (submitted && !user.user_id ? ' is-invalid' : '')} />
+                    {submitted && !user.user_id &&
+                        <div className="invalid-feedback">User ID is required</div>
                     }
                 </div>
                 <div className="form-group">

@@ -1,72 +1,74 @@
 ﻿﻿const express = require('express');
 const router = express.Router();
 const adminService = require('../services/user.service');
+const {validateToken, permitAdmin,permitAll} = require('../middleware/AuthMiddleware');
+
 // routes
 router.post('/login', login);
-router.post('/register', register);
-router.get('/admins', getAll);
-router.get('/teachers', getAllTeachers);
-router.get('/students', getAllStudents);
-router.get('/current', getCurrent);
-router.get('/:id', getById);
-router.put('/:id', update);
-router.delete('/:id', _delete);
-router.delete('/deleteTeacher/:id',deleteTeacher);
-router.delete('/deleteStudent/:id',deleteStudent);
+router.post('/register', validateToken,permitAdmin, register);
+router.put('/:id', validateToken,permitAdmin, update);
+router.delete('/:user_id', validateToken,permitAdmin, _delete);
 //routes for teacher related issues
-router.post('/registerTeacher', registerTeacher);
-router.post('/registerStudent', registerStudent);
-router.get('/teachers/:id',getTeacherById);
-router.get('/students/:id',getStudentById);
-router.put('/teachers/:id',updateTeacher);
-router.put('/students/:id',updateStudent);
+router.post('/registerTeacher', validateToken,permitAdmin, registerTeacher);
+router.post('/registerStudent', validateToken,permitAdmin, registerStudent);
+router.get('/getTeachers',validateToken,permitAdmin,getAllTeachers);
+router.get('/getStudents',validateToken,permitAdmin,getAllStudents);
+router.get('/getById/:id',validateToken,permitAll,getById);
+router.get('/getAllInfo/:user_id',validateToken,permitAdmin,getAllInfo)
+
 
 module.exports = router;
 
+const NoError = {status:0, message:"No error"};
+
 function login(req, res, next) {
-    adminService.authenticate(req.body)
-        .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
+    adminService.login(req.body)
+        .then(user => user ? res.json(user) : res.status(400).json({ message: 'Unauthorized User!' }))
         .catch(err => next(err));
 }
-
 function register(req, res, next) {
-    adminService.create(req.body)
-        .then(() => res.json({}))
+    adminService.register(req.body)
+        .then(() => res.json({
+            data: req.body
+           }))
         .catch(err => next(err));
 }
 function registerTeacher(req, res, next) {
     adminService.createTeacher(req.body)
-        .then(() => res.json({}))
+        .then(() => res.json({data: req.body}))
         .catch(err => next(err));
 }
 
 function registerStudent(req, res, next) {
     adminService.createStudent(req.body)
-        .then(() => res.json({}))
+        .then(() => res.json({data: req.body}))
         .catch(err => next(err));
 }
 
-function getAll(req, res, next) {
-    adminService.getAll()
-        .then(users => res.json(users))
+function update(req, res, next) {
+    
+    adminService.update(req.params.id,req.body)
+    .then(() => res.json({
+        data: req.body
+       }))
+    .catch(err => next(err));
+}
+
+function _delete(req, res, next) {
+    adminService.delete(req.params.user_id)
+        .then(() => res.json({}))
         .catch(err => next(err));
 }
 
 function getAllTeachers(req, res, next) {
     adminService.getAllTeachers()
-        .then(teachers => res.json(teachers))
+        .then(users => res.json({error:NoError,data:{users:users}, message:"Check"}))
         .catch(err => next(err));
 }
 
 function getAllStudents(req, res, next) {
     adminService.getAllStudents()
-        .then(students => res.json(students))
-        .catch(err => next(err));
-}
-
-function getCurrent(req, res, next) {
-    adminService.getById(req.user.sub)
-        .then(user => user ? res.json(user) : res.sendStatus(404))
+        .then(users => res.json({error:NoError,data:{users:users}, message:"Check"}))
         .catch(err => next(err));
 }
 
@@ -76,47 +78,8 @@ function getById(req, res, next) {
         .catch(err => next(err));
 }
 
-function getTeacherById(req,res,next) {
-    adminService.getTeacherById(req.params.id)
-    .then(user => user ? res.json(user) : res.sendStatus(404))
-    .catch(err => next(err));
-}
-
-function getStudentById(req,res,next) {
-    adminService.getStudentById(req.params.id)
-    .then(user => user ? res.json(user) : res.sendStatus(404))
-    .catch(err => next(err));
-}
-function update(req, res, next) {
-    adminService.update(req.params.id, req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
-}
-function updateTeacher(req, res, next) {
-    adminService.updateTeacher(req.params.id, req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
-}
-
-function updateStudent(req, res, next) {
-    adminService.updateStudent(req.params.id, req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
-}
-function _delete(req, res, next) {
-    adminService.delete(req.params.id)
-        .then(() => res.json({}))
-        .catch(err => next(err));
-}
-
-function deleteTeacher(req, res, next) {
-    adminService.deleteTeacher(req.params.id)
-        .then(() => res.json({}))
-        .catch(err => next(err));
-}
-
-function deleteStudent(req, res, next) {
-    adminService.deleteStudent(req.params.id)
-        .then(() => res.json({}))
+function getAllInfo(req, res, next) {
+    adminService.getAllInfo(req.params.user_id)
+        .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }

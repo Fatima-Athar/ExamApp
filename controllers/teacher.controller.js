@@ -1,32 +1,28 @@
 ﻿﻿const express = require('express');
 const router = express.Router();
 const userService = require('../services/teacher.service');
+const {validateToken, permitTeacher} = require('../middleware/AuthMiddleware');
 
 // routes
-router.post('/login', login);
-router.get('/', getAll); 
-router.get('/students', getAllStudents);
-router.get('/:id', getById); //jwt of admin
-router.put('/:id', update); //jwt of admin
-
-
+//router.post('/login', login);
+router.put('/:user_id', validateToken, permitTeacher, update);
+router.put('/addInfo/:user_id', validateToken, permitTeacher, addInfo);
+router.get('/:id',validateToken,permitTeacher,getById);
 module.exports = router;
 
-function login(req, res, next) {
-    userService.authenticate(req.body)
+/*function login(req, res, next) {
+    userService.login(req.body)
         .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
         .catch(err => next(err));
-}
+}*/
 
-function getAll(req, res, next) {
-    userService.getAll()
-        .then(users => res.json(users))
-        .catch(err => next(err));
-}
-function getAllStudents(req, res, next) {
-    userService.getAllStudents()
-        .then(students => res.json(students))
-        .catch(err => next(err));
+function update(req, res, next) {
+    
+    userService.update(req.params.user_id,req.body)
+    .then(() => res.json({
+        data: req.body
+       }))
+    .catch(err => next(err));
 }
 
 function getById(req, res, next) {
@@ -34,9 +30,11 @@ function getById(req, res, next) {
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }
-
-function update(req, res, next) {
-    userService.update(req.params.id, req.body)
-        .then(() => res.json({}))
+function addInfo(req,res,next) {
+    userService.addInfo(req.params.user_id,req.body)
+        .then(() => res.json({
+            data: req.body
+           }))
         .catch(err => next(err));
+
 }

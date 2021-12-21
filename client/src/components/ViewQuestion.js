@@ -10,8 +10,8 @@ const ViewQuestion = () => {
             "text":"",
             "isCorrect":""
         }]
-    });
-    
+     });
+
 
     const {id} = useParams();
 

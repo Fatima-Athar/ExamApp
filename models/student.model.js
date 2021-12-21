@@ -2,11 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    username: { type: String, unique: true, required: true },
-    hash: { type: String, required: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    Class: { type: String, required: false },
+    student_id: { type: String, unique: true, required: false },
+    phone_no: {type: String, required: false},
+    course_id: [{ course: { type: String, unique: true,required: false }}],
+    class_id: {type:String, required: false },
     createdDate: { type: Date, default: Date.now },
 });
 

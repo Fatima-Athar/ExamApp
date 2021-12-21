@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import spiderman from './spiderman.jpg'
+const Profile = () => {
 
-const ViewStudent = () => {
-
-    const [Student, setStudent] = useState({
+    const [User, setUser] = useState({
         firstName: "",
         lastName: "",
         user_id: "",
-        
+        role:"",
     });
     const id = useParams();
+    
     useEffect(() => {
-        loadStudent();
+        loadUser();
     }, []);
 
-    const loadStudent = async () => {
-        console.log(id.id)
+    const loadUser = async () => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        console.log(user)
+        
         const result =
                 await axios({
                     method: 'get',
@@ -26,40 +29,49 @@ const ViewStudent = () => {
                         'Content-Type': 'application/json',
     
                     },
-                    url: 'http://localhost:4000/admin/getById/' + id.id
+                    url: 'http://localhost:4000/admin/getById/' + user.id
                 })        
             console.log(result.data)
-            setStudent(result.data)
+            setUser(result.data)
       };
 
 
     return (
         <div className="container py-4 ">
-
-            <h1 className="display-4">Student Name: {Student.firstName} {Student.lastName}</h1>
+            <div className="w-75 mx-auto shadow p-5">
+            <img src ={spiderman} alt='spidermna' width={200} height={200}></img>
+            <h1 className="display-4">{User.firstName} {User.lastName}</h1>
             <hr />
-            <ul className="list-group w-50 ">
-                <div class="row mb-3">
+            <ul className="list-group w-50 mx-auto ">
+                <div class="row mb-3 ">
                     <label for="inputText3" class="col-sm-2 col-form-label">First Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputText3" name="firstname" value={Student.firstName} readOnly />
+                        <input type="text" class="form-control" id="inputText3" name="firstname" value={User.firstName} readOnly />
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputText3" class="col-sm-2 col-form-label">Last Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputText3" name="lastname" value={Student.lastName} readOnly />
-                    </div>
-                </div><div class="row mb-3">
-                    <label for="inputText3" class="col-sm-2 col-form-label">User ID</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputText3" name="user ID" value={Student.user_id} readOnly />
+                        <input type="text" class="form-control" id="inputText3" name="lastname" value={User.lastName} readOnly />
                     </div>
                 </div>
                 <div class="row mb-3">
-                
+                    <label for="inputText3" class="col-sm-2 col-form-label">User ID</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputText3" name="user ID" value={User.user_id} readOnly />
+                    </div>
+                 
                 </div>
+                
+                <div class="row mb-3 ">
+                <label for="inputText3" class="col-sm-2 col-form-label">Role</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputText3" name="User Role" value={User.role} readOnly />
+                    </div>
+                </div>
+                
             </ul>
+            </div>
             <br />
             <Link className="btn btn-primary" to="/adminDashboard">
                 Back to Dashboard
@@ -68,4 +80,4 @@ const ViewStudent = () => {
     );
 }
 
-export default ViewStudent;
+export default Profile;

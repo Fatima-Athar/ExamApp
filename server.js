@@ -4,7 +4,6 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('middleware/jwt');
-const teacherJWT = require('middleware/teacherJWT');
 const errorHandler = require('middleware/errors');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -12,13 +11,11 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // use JWT auth to secure the api
-
-
-// api routescd
-app.use('/admin', require('./controllers/users.controller'),jwt());
-app.use('/teacher', require('./controllers/teacher.controller'),teacherJWT());
+// api routes
+app.use('/admin', require('./controllers/users.controller'));
+app.use('/teacher', require('./controllers/teacher.controller'));
 app.use('/student', require('./controllers/student.controller'));
-app.use('/question',require('./controllers/question.controller'),jwt())
+app.use('/question',require('./controllers/question.controller'));
 
 // global error handler
 app.use(errorHandler);
