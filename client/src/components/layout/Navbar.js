@@ -6,6 +6,15 @@ const Navbar = () => {
     const history = useNavigate()
     const user = JSON.parse(localStorage.getItem('user'))
     const token = localStorage.getItem('user');
+
+    var help = false;
+
+    if(user) {
+        if(user.role ==="admin"){
+            help = true;
+        }
+    }
+
     const logout = () => {
         history("/")
         localStorage.clear()
@@ -25,11 +34,29 @@ const Navbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" >
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li className="nav-item">
+                        </li>
+                        <li className="nav-item">
+                            
+                        </li>
+                        <li className="nav-item">
+
+                            {help &&
+                            <NavLink className="nav-link" aria-current="page" exact to="/adminDashboard/addTeacher"> Add Teacher</NavLink>
+                               
+                                }
+                          {/*  {user ? user.role==='admin'&&
+                            <NavLink className="nav-link" aria-current="page" exact to="/adminDashboard/addTeacher"> Add Teacher</NavLink>:
+                                <></>
+                            }*/}
+                        </li>
                         <li className="nav-item">
                             {!token &&
                             <NavLink className="nav-link" aria-current="page" exact to="/"> Login</NavLink>
+                            
                             }
                         </li>
+                        
                         <li className="nav-item">
                             <NavLink className="nav-link" exact to="/profilePage"> Profile Page</NavLink>
                         </li>

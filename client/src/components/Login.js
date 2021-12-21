@@ -47,7 +47,8 @@ function Login() {
     return (
         <div>
                 <div>
-                <div className="container mx-auto shadow p-5">
+                <div className="m-5 container  mx-auto shadow p-5">
+                <div className="py-4" ><h1> Welcome to ZAP!</h1></div>    
                 <div className="py-4">
                     <input type="text" className="form-control form-control-lg" placeholder="User ID"
                     onChange={(event)=>{setUsername(event.target.value);}}
