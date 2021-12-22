@@ -37,12 +37,16 @@ const Navbar = () => {
                     <li className="nav-item">
                         </li>
                         <li className="nav-item">
-                            
+                        {help &&
+                            <NavLink className="nav-link" aria-current="page" exact to="/adminDashboard/addTeacher"> Add Teacher</NavLink>
+                               
+                                }
                         </li>
                         <li className="nav-item">
 
+                            
                             {help &&
-                            <NavLink className="nav-link" aria-current="page" exact to="/adminDashboard/addTeacher"> Add Teacher</NavLink>
+                            <NavLink className="nav-link" aria-current="page" exact to="/adminDashboard/addStudent"> Add Student</NavLink>
                                
                                 }
                           {/*  {user ? user.role==='admin'&&

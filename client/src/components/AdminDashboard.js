@@ -110,71 +110,14 @@ const AdminDashboard = () => {
     return (
         
         <div className="container"> <br></br>
-        
-        <Link className="btn btn-primary btn-block me-2" to='/adminDashboard/addTeacher'>Add Teacher</Link>
-            <Link className="btn btn-primary btn-block me-2" to='/adminDashboard/addStudent'>Add Student</Link>
-            <div className='py-4'>
-                <h1> Teachers</h1>
-                <table class="table table-hover border shadow">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">User ID</th>
-                            <th> Action </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {teachers.map((teacher, index) => (
-                            <tr>
-                                <th scope="row">{index + 1}</th>
-                                <td>{teacher.firstName}</td>
-                                <td>{teacher.lastName}</td>
-                                <td>{teacher.user_id}</td>
-                                <td>
-                                    <button className="btn btn-outline-secondary me-2" onClick={() => viewTeacher(teacher.id)} >View</button>
-                                    <button className="btn btn-outline-primary me-2" onClick={()=> editTeacher(teacher.id)} >Edit </button>
-                                    <button className="btn btn-outline-danger me-2" onClick={() => deleteTeacher(teacher.user_id)} >Delete</button>
-                                    
-                                </td>   
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                <div className='py-4'>
-                    <h1> Students</h1>
-                    <table class="table table-hover border shadow">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">user ID</th>
-                                <th> Action </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {students.map((student, index) => (
-                                <tr>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{student.firstName}</td>
-                                    <td>{student.lastName}</td>
-                                    <td>{student.user_id}</td>
-                                    <td>
-                                        <button className="btn btn-outline-secondary me-2" onClick={() => viewStudent(student.id)} >View</button>
-                                        <button className="btn btn-outline-primary me-2" onClick={()=> editStudent(student.id)} >Edit </button>
-                                        <button className="btn btn-outline-danger" onClick={() => deleteStudent(student.user_id)} >Delete</button>
-                                        
-                                    </td>
 
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+        <Link className="btn btn-primary btn-block me-2" to='/adminDashboard/teacherPage'>Teachers</Link>
+        <Link className="btn btn-primary btn-block me-2" to='/adminDashboard/studentPage'>Students</Link>
+
+
+            
                 </div>
-            </div>
-        </div>
+           
         
     );
 };

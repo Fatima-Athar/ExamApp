@@ -21,6 +21,8 @@ import QuizTab from './components/QuizTab';
 import ViewQuestion from './components/ViewQuestion';
 import {AuthContext} from './components/_helpers/AuthContext';
 import AddQuestion from './components/AddQuestion';
+import TeacherPage from './components/TeacherPage';
+import StudentPage from './components/StudentPage';
 import Profile from './components/Profile';
 import {useState} from 'react';
 
@@ -45,6 +47,8 @@ function App() {
             <Route exact path ='/adminDashboard/viewStudent/:id' element={<ViewStudent/>} />
             <Route exact path = '/adminDashboard/editTeacher/:id' element={<EditTeacher/>} />
             <Route exact path = '/adminDashboard/editStudent/:id' element={<EditStudent/>} />
+            <Route exact path = '/adminDashboard/teacherPage' element={<TeacherPage/>} />
+            <Route exact path = '/adminDashboard/studentPage' element={<StudentPage/>} />
             <Route exact path ='/teacherDashboard/QuizTab' element={<QuizTab/>} />
             <Route exact path = '/teacherDashboard/QuizTab/addQuestion/' element = {<AddQuestion/>} />
             <Route exact path = '/teacherDashboard/QuizTab/viewQuestion/:id' element = {<ViewQuestion/>} />
