@@ -87,4 +87,34 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+
+
+router.get("/",function(req,res){
+    const pagination = parseInt(req.query.pagination);
+    //parseInt(req.query.pagination) ? parseInt(req.body.pagination) : 10;
+    //PageNumber From which Page to Start 
+    const pageNumber = parseInt(req.query.page)
+    //parseInt(req.query.page) ? parseInt(req.body.page) : 1;
+
+    //console.log(req.query.page);
+    //console.log(req.query.pagination);
+    //console.log(pageNumber);
+    //console.log(pagination);
+
+    const questions = Question.find({})
+        //skip takes argument to skip number of entries 
+        .sort({"id" : 1})
+        .skip((pageNumber - 1) * pagination)
+        //limit is number of Records we want to display
+        .limit(pagination)
+        .then((data) => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            res.status(400).send({
+                "err": err
+            })
+        })
+})
+
 module.exports = router

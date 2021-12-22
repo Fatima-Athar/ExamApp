@@ -34,8 +34,8 @@ const ViewQuestion = () => {
     }
     return(
         <div className="container py-4">
-        <Link className="btn btn-primary" to="/TeacherDashboard/QuizTab">
-          back to Quiz Dashboard
+        <Link className="btn btn-primary" to="/QuizDashboard">
+          Back
         </Link>
         <h1 className="display-4">Question: {question.description}</h1>
         

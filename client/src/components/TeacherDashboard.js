@@ -34,33 +34,10 @@ const TeacherDashboard = () => {
     return (
         <div className="container">
           <br></br>
-          <Link className="btn btn-outline-secondary me-2" to='/teacherDashboard/QuizTab'  >Quiz Tab</Link>
-            <div className='py-4'>
-                <h1> Students</h1>
-                <table class="table border shadow">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">username</th>
-                            <th> Action </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            {students.map((student, index) => (
-              <tr>
-                <th scope="row">{index + 1}</th>
-                <td>{student.firstName}</td>
-                <td>{student.lastName}</td>
-                <td>{student.username}</td>
-                
-              </tr>
-            ))}
-          </tbody>
-                </table>
+          <Link className="btn btn-outline-secondary me-2" to='/QuizDashboard'  >Quiz Tab</Link>
+            
             </div>
-        </div>
+       
     );
 };
 
