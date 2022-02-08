@@ -1,6 +1,9 @@
+const { query } = require('express');
 const express = require('express')
 const router = express.Router()
 const Question = require('../models/question.model') // includes our model
+
+const NoError = {status:0, message:"No error"};
 
 // get all quiz questions
 router.get('/questions', async (req, res) => {
@@ -89,7 +92,7 @@ router.delete('/:id', async (req, res) => {
 
 
 
-router.get("/",function(req,res){
+router.get("/",async (req,res)=> {
     const pagination = parseInt(req.query.pagination);
     //parseInt(req.query.pagination) ? parseInt(req.body.pagination) : 10;
     //PageNumber From which Page to Start 
@@ -100,21 +103,32 @@ router.get("/",function(req,res){
     //console.log(req.query.pagination);
     //console.log(pageNumber);
     //console.log(pagination);
+    // let pageNumber = parseInt(req.query.pagination)
+    let start = ((pageNumber -1)* pagination)
+    let end = ((pageNumber -1)* pagination) + pagination
 
-    const questions = Question.find({})
-        //skip takes argument to skip number of entries 
-        .sort({"id" : 1})
-        .skip((pageNumber - 1) * pagination)
-        //limit is number of Records we want to display
-        .limit(pagination)
-        .then((data) => {
-            res.status(200).json(data)
-        })
-        .catch(err => {
+    const questions = await Question.find({}).limit(pagination).skip(start)
+        // //skip takes argument to skip number of entries 
+        // .sort({"id" : 1})
+        // .skip((pageNumber - 1) * pagination)
+        // //limit is number of Records we want to display
+        // .limit(pagination)
+        if(questions){
+            res.status(200).json({
+                data:questions
+            })
+        }else{
             res.status(400).send({
                 "err": err
             })
-        })
-})
+
+        }
+    })
+        // .then((data) => res.json(
+        //     data
+        // ))
+        // .catch(err => {
+                    // })
+// })
 
 module.exports = router

@@ -10,7 +10,7 @@ const QuizDashboard = () => {
 
      const [pageCount, setpageCount] = useState(0);
 
-     let limit = 5;
+     let limit = 3;
 
      
 
@@ -25,10 +25,10 @@ const QuizDashboard = () => {
                     'Content-Type': 'application/json',
 
                 },
-                url: `http://localhost:4000/question/?page=${currentPage}&pagination=3`
+                url: `http://localhost:4000/question/?page=${currentPage}&pagination=6`
             })
-        
-            setQuestions(result.data)
+            console.log(result.data)
+            setQuestions(result.data.data)
         
       };
 
@@ -59,10 +59,10 @@ const QuizDashboard = () => {
                     'Content-Type': 'application/json',
 
                 },
-                url: "http://localhost:4000/question/?page=1&pagination=3"
+                url: "http://localhost:4000/question/?page=1&pagination=6"
             })
         //console.log(result.data)
-        setQuestions(result.data)
+        setQuestions(result.data.data)
         //console.log(questions)
         //setUser(result.data.reverse());
         
@@ -99,7 +99,7 @@ const QuizDashboard = () => {
                         </tr>
                     </thead>
                  <tbody>
-                 {
+                 {questions &&
                 questions.map((question,index) =>(
                  <tr>
                 <th scope="row">{index+1}</th>

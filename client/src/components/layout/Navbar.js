@@ -8,12 +8,19 @@ const Navbar = () => {
     const token = localStorage.getItem('user');
 
     var help = false;
+    var help2 = false;
 
     if(user) {
         if(user.role ==="admin"){
             help = true;
         }
     }
+    if(user) {
+        if(user.role ==="teacher"){
+            help2 = true;
+        }
+    }
+
 
     const logout = () => {
         history("/")
@@ -33,6 +40,12 @@ const Navbar = () => {
                     
                 </button>
                 <div className="collapse navbar-collapse" >
+                {help &&
+                            <h4 className="text-white"> Admin Dashboard</h4>
+                            }
+                            {help2 &&
+                            <h4 className="text-white"> Teacher Dashboard</h4>
+                            }
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li className="nav-item">
                         </li>
@@ -49,6 +62,7 @@ const Navbar = () => {
                             <NavLink className="nav-link" aria-current="page" exact to="/adminDashboard/addStudent"> Add Student</NavLink>
                                
                                 }
+                            
                           {/*  {user ? user.role==='admin'&&
                             <NavLink className="nav-link" aria-current="page" exact to="/adminDashboard/addTeacher"> Add Teacher</NavLink>:
                                 <></>
@@ -62,8 +76,11 @@ const Navbar = () => {
                         </li>
                         
                         <li className="nav-item">
+                        {token &&
                             <NavLink className="nav-link" exact to="/profilePage"> Profile Page</NavLink>
+                        }
                         </li>
+                        
                         <li className="nav-item">
                             <NavLink className="nav-link" exact to="/about">About</NavLink>
                         </li>

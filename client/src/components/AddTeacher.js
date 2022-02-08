@@ -27,7 +27,7 @@ const onSubmit = async e => {
         'Content-Type': 'application/json'
         
     }})
-  navigate('/AdminDashboard');
+  navigate('/AdminDashboard/teacherPage');
 
 }
     return(
