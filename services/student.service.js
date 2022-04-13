@@ -44,7 +44,7 @@ async function update(user_id,userParam) {
     await user.save();
 }
 
-async function addInfo(user_id,userParam) {
+async function addInfo(user_id,userParam, file) {
     const user = await User.findOne( {user_id:user_id})
     if(!user) {
         throw 'User not found'
@@ -52,10 +52,11 @@ async function addInfo(user_id,userParam) {
     if(user.role!=='student') {
         throw 'You are not Authorized to make this change';
     }
-    let student = await Student.findOne({student_id:user._id}) 
+    let student = await Student.findOne({student_id:user_id}) 
     if(!student) {
      student = new Student(userParam);
-     student.student_id = user._id;
+     student.image = file.path;
+     student.student_id = user_id;
     }
     
     Object.assign(student, userParam);

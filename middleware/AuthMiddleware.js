@@ -91,4 +91,39 @@ const permitAll = (req, res, next) => {
     }
 }
 
-module.exports = { validateToken, permitAdmin, permitTeacher, permitStudent, permitAll };
+
+
+const permitAT = (req, res, next) => {
+    try {
+
+        if (res.locals.decoded.role =='admin' ||res.locals.decoded.role =='teacher') {
+            next();
+            
+        }
+
+        else {
+            return res.status(400).json({ error: { status: 1, message: "Only Admin and Teachers can Access" }, data: {}, message: {} });
+        }
+
+    } catch (e) {
+        return res.status(400).json({ error: { status: 1, message: e.message }, data: {}, message: {} });
+    }
+}
+const permitAS = (req, res, next) => {
+    try {
+
+        if (res.locals.decoded.role =='admin' ||res.locals.decoded.role =='student') {
+            next();
+            
+        }
+
+        else {
+            return res.status(400).json({ error: { status: 1, message: "Only Admin and Students can Access" }, data: {}, message: {} });
+        }
+
+    } catch (e) {
+        return res.status(400).json({ error: { status: 1, message: e.message }, data: {}, message: {} });
+    }
+}
+
+module.exports = { validateToken, permitAdmin, permitTeacher, permitStudent, permitAll, permitAT, permitAS };
