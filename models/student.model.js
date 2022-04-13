@@ -4,12 +4,13 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     student_id: { type: String, unique: true, required: false },
     phone_no: {type: String, required: false},
+    image: {type:String, required:false},
     course: [
         { 
-            name: { type: String, required: true },
             course_id:{type:String, required: false, unique: false }
         }
         ],
+    admit_term:{ type: String, unique: true, required: false },
     createdDate: { type: Date, default: Date.now },
 });
 

@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     user_id: { type: String, unique: true, required: true },
+    email_address:{
+         type: String,
+         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/],
+         required:false},
+         
     hash: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },

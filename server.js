@@ -1,6 +1,8 @@
 ﻿require('rootpath')();
 const express = require('express');
 const app = express();
+fs = require("fs"),
+multer = require("multer")
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('middleware/jwt');
