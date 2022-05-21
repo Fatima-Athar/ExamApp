@@ -2,16 +2,27 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    student_id: { type: String, unique: true, required: false },
+    student_id: { 
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: false },
     phone_no: {type: String, required: false},
-    image: {type:String, required:false},
     course: [
         { 
-            course_id:{type:String, required: false, unique: false }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Courses"
         }
         ],
-    admit_term:{ type: String, unique: true, required: false },
     createdDate: { type: Date, default: Date.now },
+});
+
+schema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+        delete ret._id;
+        delete ret.hash;
+    }
 });
 
 schema.set('toJSON', {
