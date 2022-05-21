@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('config/db');
 const User = db.User;
+const Student = db.Student;
 const Teacher = db.Teacher;
+const Course = db.Courses;
 
 module.exports = {
     login,
@@ -16,7 +18,8 @@ module.exports = {
     getAllTeachers,
     getAllStudents,
     getById,
-    getAllInfo
+    getAllInfo,
+  //  enrolStudent
 };
 
 async function login({ user_id, password }) {
@@ -37,6 +40,7 @@ async function register(userParam) {
     if(userParam.role!=='admin'){
         throw "Enter Valid user"
     }
+
     if (await User.findOne({ user_id: userParam.user_id })) {
         throw 'User ID "' + userParam.user_id + '" is already taken';
     }
@@ -121,6 +125,7 @@ async function update(id,userParam) {
 }
 
 async function _delete(user_id) {
+    //add condition here for teacher
     return await User.findOneAndRemove({user_id:user_id});
     
 }
@@ -154,3 +159,32 @@ async function getAllInfo(user_id){
     
         
 }
+
+/*async function enrolStudent(id,userParam) {
+    
+    var user = await User.findOne(id);
+    console.log(user.role)
+    // validate
+    if (!user) throw 'Student not Found'
+    if(user.role !== 'student') throw 'Student not found';
+    
+    const course = await Course.findOne({class_code : userParam.class_code})
+    console.log(userParam.class_code)
+    if(!course) throw 'Course Not found'
+    
+    const checkStudent = await Student.findOne({student_id:user._id})
+    if(checkStudent) {
+    const checkCourse = await Student.findOne({course: userParam.class_code})
+    if(!checkCourse) {
+        await Student.findOneAndUpdate({student_id: user._id}, {$push: {course: req.params.id} }, {new: true} )
+    }}
+    if(!checkStudent) {
+        await Student.create({student_id: user._id}, {$push: {course: req.params.id} }, {new: true})
+    }
+
+    // copy userParam properties to user
+    Object.assign(user, userParam);
+
+    await user.save();
+}
+*/
