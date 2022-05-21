@@ -1,5 +1,8 @@
 ﻿const express = require("express");
 const router = express.Router();
+const Teachers = require('../models/teacher.model') 
+const Courses = require('../models/courses.model');
+const Student = require('../models/student.model');
 const adminService = require("../services/user.service");
 const {
   validateToken,
@@ -13,12 +16,13 @@ router.post("/register", /*validateToken,permitAdmin,*/ register);
 router.put("/:id", validateToken, permitAdmin, update);
 router.delete("/:user_id", validateToken, permitAdmin, _delete);
 //routes for teacher related issues
-router.post("/registerTeacher", validateToken, permitAdmin, registerTeacher);
+router.post("/registerTeacher", /*validateToken, permitAdmin,*/ registerTeacher);
 router.post("/registerStudent", validateToken, permitAdmin, registerStudent);
-router.get("/getTeachers", /*validateToken, permitAdmin,*/ getAllTeachers);
+router.get("/getTeachers", validateToken, permitAdmin,getAllTeachers);
 router.get("/getStudents", /*validateToken, permitAdmin,*/ getAllStudents);
 router.get("/getById/:id", validateToken, permitAll, getById);
 router.get("/getAllInfo/:user_id", validateToken, permitAdmin, getAllInfo);
+//router.post("/enrolStudent/:user_id",enrolStudent);
 
 module.exports = router;
 
@@ -57,6 +61,12 @@ function registerStudent(req, res, next) {
     .then(() => res.json({ data: req.body }))
     .catch((err) => next(err));
 }
+/*function enrolStudent(req, res, next) {
+  adminService
+    .enrolStudent(req.params.id, req.params.body)
+    .then(() => res.json({ data: req.params.body }))
+    .catch((err) => next(err));
+}*/
 
 function update(req, res, next) {
   adminService
